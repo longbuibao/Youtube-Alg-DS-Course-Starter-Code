@@ -1,11 +1,37 @@
 // Implement a swap helper function that we will use in both BS and SS
-function swap(arr, i, j) {}
+function swap(arr, i, j) {
+  ;[arr[i], arr[j]] = [arr[j], arr[i]]
+  return arr
+}
 
 //bubbleSort works by having sorted data accumulate at end of array
-function bubbleSort(arr) {}
+function bubbleSort(arr) {
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[i] > arr[j]) [arr[i], arr[j]] = [arr[j], arr[i]]
+    }
+  }
+  return arr
+}
 
 //selectionSort works by having sorted data accumulate at start of array
-function selectionSort(arr) {}
+function selectionSort(arr) {
+  let minElement = arr[0]
+  let position = 0
+
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[j] < minElement) {
+        minElement = arr[j]
+        position = j
+      }
+    }
+    swap(arr, i, position)
+    minElement = arr[i + 1]
+    position = i + 1
+  }
+  return arr
+}
 
 // _________ _______  _______ _________   _______  _______  _______  _______  _______
 // \__   __/(  ____ \(  ____ \\__   __/  (  ____ \(  ___  )(  ____ \(  ____ \(  ____ \
@@ -30,27 +56,27 @@ function selectionSort(arr) {}
 //                          ______ ______ ______ ______ ______
 //                         |______|______|______|______|______|
 
-mocha.setup("bdd");
-const { assert } = chai;
+mocha.setup("bdd")
+const { assert } = chai
 
 describe("swap()", () => {
   it("swaps values in an array when provided with 2 indexes.", () => {
-    const arr = [13, 2, 4];
-    swap(arr, 0, 1);
-    assert.deepEqual(arr, [2, 13, 4]);
-  });
-});
+    const arr = [13, 2, 4]
+    swap(arr, 0, 1)
+    assert.deepEqual(arr, [2, 13, 4])
+  })
+})
 
-describe.skip("Bubble Sort", () => {
+describe("Bubble Sort", () => {
   it("sorts an array", () => {
-    assert.deepEqual(bubbleSort([5, 1, 3, 7, 6, 2, 4]), [1, 2, 3, 4, 5, 6, 7]);
-  });
-});
+    assert.deepEqual(bubbleSort([5, 1, 3, 7, 6, 2, 4]), [1, 2, 3, 4, 5, 6, 7])
+  })
+})
 
-describe.skip("Selection Sort", () => {
+describe("Selection Sort", () => {
   it("sorts an array", () => {
-    assert.deepEqual(selectionSort([5, 1, 3, 2, 4]), [1, 2, 3, 4, 5]);
-  });
-});
+    assert.deepEqual(selectionSort([5, 1, 3, 2, 4]), [1, 2, 3, 4, 5])
+  })
+})
 
-mocha.run();
+mocha.run()
